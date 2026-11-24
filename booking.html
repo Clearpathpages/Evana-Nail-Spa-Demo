@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Book | Evana Nail & Spa, Davie FL</title>
+<meta name="description" content="Book at Evana Nail & Spa: choose your services and add-ons, pick a technician and a time, and confirm.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=3">
+<style>
+  .book-hero { padding: 44px 0 24px; }
+  .book-hero h1 { font-size: clamp(2.7rem, 5.6vw, 4.2rem); }
+  .book-hero p { color: var(--ink-soft); font-size: 1.08rem; max-width: 600px; margin: 10px 0 0; }
+
+  /* stepper */
+  .stepper { list-style: none; margin: 0 0 28px; padding: 6px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; background: var(--white); border: 1px solid var(--line); border-radius: 999px; position: sticky; top: calc(var(--nav-h) + 10px); z-index: 30; box-shadow: 0 6px 20px -14px rgba(60, 35, 15, .3); }
+  .stepper button { width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 9px 10px; border: 0; border-radius: 999px; background: transparent; font: 600 .82rem var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); cursor: pointer; }
+  .stepper button:disabled { cursor: default; opacity: .55; }
+  .stepper .n { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--peach-soft); color: var(--orange-deep); font-size: .8rem; letter-spacing: 0; flex: none; }
+  .stepper .done .n { background: var(--orange); color: var(--ink); }
+  .stepper .done .n::after { content: '✓'; }
+  .stepper .done .n span { display: none; }
+  .stepper .on button { background: var(--ink); color: var(--white); opacity: 1; }
+  .stepper .on .n { background: var(--white); color: var(--ink); }
+
+  .book-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 28px; align-items: start; padding-bottom: 96px; }
+  .book-layout > * { min-width: 0; }
+  .panel { background: var(--white); border: 1px solid var(--line); border-radius: 24px; padding: 28px; min-height: 420px; }
+  .panel-head { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; flex-wrap: wrap; }
+  .panel-head h2 { font-size: 2rem; flex: 1; min-width: 200px; }
+  .panel-head p { width: 100%; margin: -6px 0 0; color: var(--ink-soft); }
+  .back { display: inline-flex; align-items: center; gap: 6px; border: 1.5px solid var(--line); background: var(--white); border-radius: 999px; padding: 8px 14px; font: 600 .85rem var(--sans); color: var(--ink); cursor: pointer; }
+  .back:hover { border-color: var(--ink); }
+  .panel-foot { display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--line); flex-wrap: wrap; }
+  .btn:disabled { opacity: .4; pointer-events: none; }
+
+  /* search */
+  .search { position: relative; margin-bottom: 20px; }
+  .search input { width: 100%; padding: 14px 18px 14px 46px; border: 1.5px solid var(--line); border-radius: 999px; font: 500 1rem var(--sans); background: var(--cream); color: var(--ink); }
+  .search input:focus { outline: none; border-color: var(--orange); background: var(--white); }
+  .search .ico { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--ink-soft); width: 20px; height: 20px; }
+
+  /* category tiles */
+  .cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .cat-tile { border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: var(--white); cursor: pointer; text-align: left; padding: 0; font: inherit; color: inherit; transition: transform .15s, border-color .15s, box-shadow .15s; display: flex; flex-direction: column; }
+  .cat-tile:hover { transform: translateY(-3px); border-color: var(--orange); box-shadow: var(--shadow); }
+  .cat-tile img { width: 100%; aspect-ratio: 4/3; object-fit: cover; background: var(--peach-soft); }
+  .cat-tile div { padding: 12px 14px 14px; }
+  .cat-tile h3 { font-size: 1.25rem; line-height: 1.1; }
+  .cat-tile small { color: var(--ink-soft); font-size: .8rem; }
+  .cat-tile .picked { display: inline-block; margin-left: 6px; background: var(--orange); color: var(--ink); border-radius: 999px; padding: 0 8px; font-weight: 700; font-size: .72rem; }
+
+  /* service rows */
+  .grp + .grp { margin-top: 22px; }
+  .grp > h4 { margin: 0 0 4px; font-size: .76rem; letter-spacing: .14em; text-transform: uppercase; color: var(--orange-deep); }
+  .rows { list-style: none; margin: 0; padding: 0; }
+  .row { display: grid; grid-template-columns: 1fr auto auto; gap: 16px; align-items: center; padding: 14px 0; border-top: 1px solid var(--line); }
+  .row:first-child { border-top: 0; }
+  .row h5 { margin: 0; font-size: 1rem; font-weight: 600; display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; }
+  .row h5 em { font-style: normal; font-weight: 500; font-size: .78rem; color: var(--ink-soft); background: var(--peach-soft); padding: 1px 8px; border-radius: 999px; }
+  .row p { margin: 3px 0 0; font-size: .88rem; color: var(--ink-soft); line-height: 1.45; }
+  .row .meta { text-align: right; white-space: nowrap; }
+  .row .meta b { display: block; font-weight: 600; font-size: 1.08rem; }
+  .row .meta small { color: var(--ink-soft); font-size: .78rem; }
+  .tag { font-size: .68rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: var(--orange); color: var(--ink); padding: 2px 9px; border-radius: 999px; }
+  .row .cat-label { font-size: .72rem; color: var(--orange-deep); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+  .pick { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--ink); background: var(--white); cursor: pointer; display: grid; place-items: center; color: var(--ink); font-size: 1.3rem; line-height: 1; transition: .15s; }
+  .pick:hover { background: var(--ink); color: var(--white); }
+  .pick[aria-pressed="true"] { background: var(--orange); border-color: var(--orange); color: var(--ink); }
+  .compact-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  .compact-grid .grp + .grp { margin-top: 0; }
+  .compact-grid .row { gap: 10px; padding: 9px 0; }
+  .compact-grid .row h5 { font-weight: 500; font-size: .95rem; }
+  .compact-grid .row .meta b { font-size: .98rem; }
+  .compact-grid .pick { width: 32px; height: 32px; font-size: 1.1rem; }
+
+  .addon-box { margin-top: 26px; background: var(--peach-soft); border: 1.5px dashed #ecc7a6; border-radius: 18px; padding: 20px; }
+  .addon-box > h4 { display: flex; align-items: center; gap: 8px; margin: 0 0 4px; font-size: 1.05rem; }
+  .addon-box > h4 .ico { color: var(--orange-deep); width: 18px; height: 18px; }
+  .addon-box > p { margin: 0 0 14px; font-size: .86rem; color: var(--ink-soft); }
+  .addon-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+  .addon-cols h5 { margin: 0 0 8px; font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--orange-deep); }
+  .chips { display: grid; gap: 6px; }
+  .chip { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; background: var(--white); border: 1.5px solid transparent; border-radius: 12px; padding: 9px 12px; font: 500 .9rem var(--sans); color: var(--ink); cursor: pointer; transition: .12s; }
+  .chip:hover { border-color: #e2b893; }
+  .chip span { flex: 1; }
+  .chip b { color: var(--orange-deep); font-weight: 600; white-space: nowrap; }
+  .chip i { width: 20px; height: 20px; border-radius: 6px; border: 1.5px solid #d9c4b2; flex: none; display: grid; place-items: center; font-style: normal; font-size: .75rem; }
+  .chip[aria-pressed="true"] { border-color: var(--orange); }
+  .chip[aria-pressed="true"] i { background: var(--orange); border-color: var(--orange); }
+  .chip[aria-pressed="true"] i::after { content: '✓'; }
+  .empty-search { color: var(--ink-soft); text-align: center; padding: 40px 0; }
+
+  /* technicians */
+  .tech-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px; }
+  .tech { border: 1.5px solid var(--line); border-radius: 18px; background: var(--white); padding: 22px 12px 18px; cursor: pointer; font: inherit; color: inherit; display: flex; flex-direction: column; align-items: center; gap: 10px; transition: .15s; }
+  .tech:hover { border-color: var(--orange); transform: translateY(-2px); }
+  .tech .av { width: 64px; height: 64px; border-radius: 50%; background: var(--peach); color: var(--orange-deep); display: grid; place-items: center; font: 600 1.6rem var(--serif); }
+  .tech.any .av { background: var(--ink); color: var(--white); }
+  .tech.any .av .ico { width: 28px; height: 28px; }
+  .tech b { font-weight: 600; }
+  .tech small { color: var(--ink-soft); font-size: .8rem; margin-top: -8px; }
+  .tech[aria-pressed="true"] { border-color: var(--orange); background: var(--peach-soft); }
+
+  /* time */
+  .time-layout { display: grid; grid-template-columns: 320px 1fr; gap: 28px; align-items: start; }
+  .cal { border: 1px solid var(--line); border-radius: 18px; padding: 16px; }
+  .cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .cal-head b { font-family: var(--serif); font-size: 1.35rem; font-weight: 600; }
+  .cal-head button { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line); background: var(--white); cursor: pointer; font-size: 1rem; color: var(--ink); }
+  .cal-head button:disabled { opacity: .3; cursor: default; }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
+  .cal-grid .dow { font-size: .72rem; font-weight: 700; color: var(--ink-soft); letter-spacing: .06em; padding: 4px 0; }
+  .cal-grid button { aspect-ratio: 1; border: 0; border-radius: 10px; background: transparent; font: 500 .92rem var(--sans); color: var(--ink); cursor: pointer; }
+  .cal-grid button:hover:not(:disabled) { background: var(--peach-soft); }
+  .cal-grid button:disabled { color: #cbbfb5; cursor: default; }
+  .cal-grid button.today { box-shadow: inset 0 0 0 1.5px var(--line); }
+  .cal-grid button[aria-pressed="true"] { background: var(--ink); color: var(--white); }
+  .slots h4 { margin: 0 0 4px; font-family: var(--serif); font-size: 1.4rem; font-weight: 600; }
+  .slots .when { color: var(--ink-soft); font-size: .9rem; margin: 0 0 14px; }
+  .slot-grp + .slot-grp { margin-top: 16px; }
+  .slot-grp h5 { margin: 0 0 8px; font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--orange-deep); }
+  .slot-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 8px; }
+  .slot { border: 1.5px solid var(--line); background: var(--white); border-radius: 10px; padding: 9px 4px; font: 600 .88rem var(--sans); color: var(--ink); cursor: pointer; }
+  .slot:hover { border-color: var(--orange); }
+  .slot[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--white); }
+  .demo-flag { display: flex; gap: 8px; align-items: flex-start; font-size: .82rem; color: var(--ink-soft); background: var(--cream); border-radius: 12px; padding: 10px 12px; margin-top: 18px; }
+
+  /* client */
+  .client-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+  .detail { background: var(--peach-soft); border-radius: 18px; padding: 20px; }
+  .detail h3 { font-size: 1.4rem; margin-bottom: 12px; }
+  .detail dl { margin: 0 0 12px; display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-size: .92rem; }
+  .detail dt { color: var(--ink-soft); }
+  .detail dd { margin: 0; font-weight: 600; }
+  .detail ul { list-style: none; margin: 0; padding: 12px 0 0; border-top: 1px solid #efd5bf; display: grid; gap: 8px; }
+  .detail li { display: flex; justify-content: space-between; gap: 10px; font-size: .9rem; }
+  .detail li small { display: block; color: var(--ink-soft); font-size: .78rem; }
+  .detail .sum { display: flex; justify-content: space-between; margin-top: 12px; padding-top: 12px; border-top: 1px solid #efd5bf; font-weight: 700; }
+  .form h3 { font-size: 1.4rem; margin-bottom: 12px; }
+  .field { display: grid; gap: 6px; margin-bottom: 14px; }
+  .field label { font-weight: 600; font-size: .88rem; }
+  .field label span { color: var(--ink-soft); font-weight: 400; }
+  .field input, .field textarea { width: 100%; padding: 12px 14px; border: 1.5px solid var(--line); border-radius: 12px; font: 500 1rem var(--sans); color: var(--ink); background: var(--white); }
+  .field textarea { min-height: 84px; resize: vertical; }
+  .field input:focus, .field textarea:focus { outline: none; border-color: var(--orange); }
+  .field .err { color: #b42318; font-size: .8rem; display: none; }
+  .field.bad input { border-color: #d92d20; }
+  .field.bad .err { display: block; }
+
+  .done-state { text-align: center; padding: 30px 10px; }
+  .done-state .tick { width: 68px; height: 68px; border-radius: 50%; background: var(--orange); display: grid; place-items: center; margin: 0 auto 16px; font-size: 2rem; }
+  .done-state h2 { font-size: 2.2rem; }
+  .done-state p { color: var(--ink-soft); max-width: 460px; margin: 10px auto 0; }
+
+  /* summary */
+  .summary { position: sticky; top: calc(var(--nav-h) + 84px); background: var(--white); border: 1px solid var(--line); border-radius: 24px; padding: 22px; box-shadow: var(--shadow); }
+  .summary h2 { font-size: 1.6rem; display: flex; justify-content: space-between; align-items: center; }
+  .summary h2 .count { font: 700 .78rem var(--sans); background: var(--peach); color: var(--orange-deep); padding: 3px 10px; border-radius: 999px; }
+  .s-empty { color: var(--ink-soft); font-size: .9rem; margin: 12px 0 0; padding: 16px; border: 1.5px dashed var(--line); border-radius: 14px; text-align: center; }
+  .s-items { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 4px; max-height: 38vh; overflow: auto; }
+  .s-items li { display: grid; grid-template-columns: 1fr auto auto; gap: 8px; align-items: center; font-size: .9rem; padding: 6px 0; }
+  .s-items li.addon span:first-child { padding-left: 12px; color: var(--ink-soft); }
+  .s-items li.addon span:first-child::before { content: '+ '; }
+  .s-items button { border: 0; background: none; color: var(--ink-soft); cursor: pointer; font-size: 1.1rem; line-height: 1; padding: 2px 4px; }
+  .s-items button:hover { color: #b42318; }
+  .s-items.locked button { display: none; }
+  .s-meta { margin: 14px 0 0; padding: 14px 0 0; border-top: 1px solid var(--line); display: grid; gap: 8px; font-size: .9rem; }
+  .s-meta div { display: flex; gap: 10px; align-items: center; }
+  .s-meta .ico { width: 18px; height: 18px; color: var(--orange-deep); }
+  .s-meta span { color: var(--ink-soft); }
+  .s-meta b { font-weight: 600; color: var(--ink); }
+  .s-total { display: flex; justify-content: space-between; align-items: baseline; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .s-total span { font-weight: 600; }
+  .s-total small { display: block; color: var(--ink-soft); font-size: .78rem; font-weight: 500; }
+  .s-total b { font-size: 1.7rem; font-weight: 700; }
+  .s-fine { font-size: .78rem; color: var(--ink-soft); margin: 6px 0 14px; }
+  .summary .btn { width: 100%; }
+
+  .bar { display: none; }
+  .close-sheet { display: none; }
+
+  @media (max-width: 1100px) {
+    .cat-grid { grid-template-columns: repeat(3, 1fr); }
+    .time-layout, .client-layout { grid-template-columns: 1fr; }
+    .cal { max-width: 380px; }
+  }
+  @media (max-width: 1024px) {
+    .book-layout { grid-template-columns: 1fr; }
+    .summary { position: fixed; inset: auto 0 0 0; top: auto; border-radius: 24px 24px 0 0; z-index: 60; transform: translateY(110%); transition: transform .25s; max-height: 82dvh; overflow: auto; }
+    .summary.open { transform: none; }
+    .close-sheet { display: block; position: absolute; right: 16px; top: 16px; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); background: var(--white); font-size: 1.2rem; cursor: pointer; }
+    .summary .btn { display: none; }
+    .bar { display: flex; position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 55; background: var(--ink); color: var(--white); border-radius: 18px; padding: 10px 10px 10px 16px; align-items: center; justify-content: space-between; gap: 12px; box-shadow: 0 14px 34px -10px rgba(0, 0, 0, .5); }
+    .bar-info { background: none; border: 0; color: inherit; text-align: left; font: inherit; cursor: pointer; padding: 0; }
+    .bar-info small { display: block; color: #bdb2a9; font-size: .78rem; }
+    .bar-info b { font-size: 1.15rem; }
+    .bar-info b::after { content: ' ⌃'; font-size: .8rem; color: #bdb2a9; }
+    .bar .btn { padding: 11px 18px; }
+    body { padding-bottom: 84px; }
+    .sheet-bd.show { position: fixed; inset: 0; background: rgba(30, 22, 16, .45); z-index: 58; }
+    .stepper { top: calc(var(--nav-h) + 6px); }
+  }
+  @media (max-width: 760px) {
+    .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .compact-grid { grid-template-columns: 1fr; gap: 16px; }
+    .stepper button { flex-direction: column; gap: 3px; font-size: .64rem; letter-spacing: .06em; padding: 7px 2px; border-radius: 13px; }
+    .stepper { border-radius: 18px; }
+  }
+  @media (max-width: 600px) {
+    .book-hero { padding: 28px 0 18px; }
+    .panel { padding: 20px 16px; border-radius: 20px; }
+    .panel-head h2 { font-size: 1.7rem; }
+    .row { grid-template-columns: 1fr auto; gap: 4px 12px; }
+    .row .meta { grid-column: 1; grid-row: 2; text-align: left; display: flex; gap: 8px; align-items: baseline; }
+    .row .meta b { display: inline; font-size: 1rem; }
+    .row .pick { grid-column: 2; grid-row: 1 / span 2; }
+    .compact-grid .row { grid-template-columns: 1fr auto auto; }
+    .compact-grid .row .meta { grid-column: auto; grid-row: auto; display: block; text-align: right; }
+    .compact-grid .row .meta small { display: none; }
+    .compact-grid .row .pick { grid-column: auto; grid-row: auto; }
+    .tech-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .panel-foot .btn { flex: 1; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="Evana Nail & Spa home"><img src="https://evananailspa.com/wp-content/uploads/2022/04/evana-nail-spa-davie-fl-33328.png" alt="Evana Nail & Spa, est. 2021" width="114" height="78"></a>
+    <nav aria-label="Main">
+      <a class="nav-home" href="index.html">Home</a>
+      <a href="index.html#menu">Services</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#gallery">Gallery</a>
+      <a href="index.html#visit">Visit</a>
+    </nav>
+    <div class="top-actions">
+      <a class="phone" href="tel:+19545412165" aria-label="Call (954) 541-2165"><svg class="ico" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span>(954) 541-2165</span></a>
+      <a class="btn btn-primary" href="booking.html" aria-current="page">Book now</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="book-hero">
+    <p class="eyebrow">Book an appointment</p>
+    <h1>Book your visit</h1>
+    <p>Pick your services and any add-ons, choose a technician and a time, then confirm.</p>
+  </section>
+
+  <ol class="stepper" id="stepper" aria-label="Booking steps">
+    <li data-step="1"><button type="button"><span class="n"><span>1</span></span>Service</button></li>
+    <li data-step="2"><button type="button"><span class="n"><span>2</span></span>Technician</button></li>
+    <li data-step="3"><button type="button"><span class="n"><span>3</span></span>Time</button></li>
+    <li data-step="4"><button type="button"><span class="n"><span>4</span></span>Client</button></li>
+  </ol>
+
+  <div class="book-layout">
+    <section class="panel" id="panel" aria-live="polite"></section>
+
+    <aside class="summary" id="summary" aria-labelledby="sum-title">
+      <button class="close-sheet" type="button" aria-label="Close summary" data-close-sheet>×</button>
+      <h2 id="sum-title">Your appointment <span class="count" id="s-count">0</span></h2>
+      <p class="s-empty" id="s-empty">No services yet. Choose a category to get started.</p>
+      <ul class="s-items" id="s-items"></ul>
+      <div class="s-meta">
+        <div><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>Technician</span><b id="s-tech">Not chosen</b></div>
+        <div><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Time</span><b id="s-time">Not chosen</b></div>
+      </div>
+      <div class="s-total"><span>Estimated total<small id="s-dur">0 min</small></span><b id="s-total">$0</b></div>
+      <p class="s-fine" id="s-fine">Final price is confirmed at the salon.</p>
+      <button class="btn btn-primary" type="button" id="s-next">Continue</button>
+    </aside>
+  </div>
+</main>
+
+<div class="sheet-bd" id="sheet-bd" data-close-sheet></div>
+<div class="bar" id="bar">
+  <button class="bar-info" type="button" id="bar-open" aria-label="Show appointment summary"><small id="bar-count">No services yet</small><b id="bar-total">$0</b></button>
+  <button class="btn btn-orange" type="button" id="bar-next">Continue</button>
+</div>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="brand"><img src="https://evananailspa.com/wp-content/uploads/2022/04/evana-nail-spa-davie-fl-33328.png" alt="Evana Nail & Spa"><p>A good salon for every lady. Daily nail and self beauty in Davie, FL.</p></div>
+      <div><h4>Explore</h4><ul><li><a href="index.html#menu">Services</a></li><li><a href="index.html#about">About</a></li><li><a href="index.html#gallery">Gallery</a></li><li><a href="booking.html">Book online</a></li></ul></div>
+      <div><h4>Contact</h4><ul><li><a href="tel:+19545412165">(954) 541-2165</a></li><li><a href="mailto:sarahge0614@gmail.com">sarahge0614@gmail.com</a></li><li>2883 S University Dr<br>Davie, FL 33328</li></ul></div>
+      <div><h4>Hours</h4><ul><li>Mon–Sat 9:30am – 7:30pm</li><li>Sun 11am – 5pm</li></ul></div>
+    </div>
+    <div class="foot-bottom"><span>© <span id="yr">2026</span> Evana Nail &amp; Spa</span><span class="demo-note">Design demo — not the live site</span></div>
+  </div>
+</footer>
+
+<script src="menu.js?v=2"></script>
+<script>
+(function () {
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const $ = id => document.getElementById(id);
+  const panel = $('panel');
+  const KEY = 'evana-booking';
+  const SEARCH_ICON = '<svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>';
+  const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+  // State. Only the chosen services are remembered between visits; nothing personal is stored.
+  const S = { step: 1, view: 'cats', cat: null, q: '', items: [], tech: null, date: null, time: null, month: null, done: false };
+  try { S.items = (JSON.parse(localStorage.getItem(KEY)) || []).filter(id => ALL_ITEMS[id]); } catch (e) {}
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S.items)); } catch (e) {} };
+
+  const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const isAddon = id => ALL_ITEMS[id].group.kind === 'addon';
+  const totalMin = () => S.items.reduce((t, id) => t + ALL_ITEMS[id].min, 0);
+  const totalPrice = () => S.items.reduce((t, id) => t + ALL_ITEMS[id].price, 0);
+  const anyUp = () => S.items.some(id => ALL_ITEMS[id].up);
+  const fmtDur = m => m < 60 ? m + ' min' : Math.floor(m / 60) + ' hr' + (m % 60 ? ' ' + (m % 60) + ' min' : '');
+  const fmtTime = m => { const h = Math.floor(m / 60), mm = m % 60; return (h % 12 || 12) + ':' + String(mm).padStart(2, '0') + (h < 12 ? ' AM' : ' PM'); };
+  const ymd = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  const parseYmd = s => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
+  const fmtDate = s => { const d = parseYmd(s); return DAYS[d.getDay()].slice(0, 3) + ', ' + MONTHS[d.getMonth()].slice(0, 3) + ' ' + d.getDate(); };
+  const hasMain = () => S.items.some(id => !isAddon(id));
+  const canReach = n => n === 1 || (n === 2 && hasMain()) || (n === 3 && hasMain() && S.tech) || (n === 4 && hasMain() && S.tech && S.date && S.time != null);
+
+  function toggle(id) {
+    const i = S.items.indexOf(id);
+    if (i >= 0) S.items.splice(i, 1); else S.items.push(id);
+    S.time = null; // duration changed, so the chosen slot may no longer fit
+    save(); render();
+  }
+
+  /* ---------- step 1: service ---------- */
+  function rowHtml(it, showCat) {
+    const on = S.items.includes(it.id);
+    return `<li class="row">
+      <div>${showCat ? `<div class="cat-label">${esc(it.cat.name)}</div>` : ''}
+        <h5>${esc(it.name)}${it.note ? `<em>${esc(it.note)}</em>` : ''}${it.tag ? `<span class="tag">${esc(it.tag)}</span>` : ''}</h5>
+        ${it.desc ? `<p>${esc(it.desc)}</p>` : ''}</div>
+      <div class="meta"><b>${money(it.price, it.up)}</b><small>${fmtDur(it.min)}</small></div>
+      <button type="button" class="pick" data-toggle="${it.id}" aria-pressed="${on}" aria-label="${on ? 'Remove' : 'Add'} ${esc(it.name)}">${on ? '✓' : '+'}</button>
+    </li>`;
+  }
+  function chipHtml(it) {
+    const on = S.items.includes(it.id);
+    return `<button type="button" class="chip" data-toggle="${it.id}" aria-pressed="${on}"><i></i><span>${esc(it.name)}</span><b>+${money(it.price, it.up)}</b></button>`;
+  }
+  function stepService() {
+    const search = `<div class="search">${SEARCH_ICON}<label class="sr" for="q">Search services</label><input id="q" type="search" placeholder="Search services, e.g. gel, pedi, brows" value="${esc(S.q)}" autocomplete="off"></div>`;
+    let body;
+    if (S.q.trim()) {
+      const q = S.q.trim().toLowerCase();
+      const hits = Object.values(ALL_ITEMS).filter(it => (it.name + ' ' + (it.note || '') + ' ' + it.cat.name).toLowerCase().includes(q));
+      body = hits.length ? `<ul class="rows">${hits.map(it => rowHtml(it, true)).join('')}</ul>` : `<p class="empty-search">No services match “${esc(S.q)}”. Try another word or <a href="tel:+19545412165">call the salon</a>.</p>`;
+      body = `<div class="panel-head"><h2>Search results</h2></div>${search}${body}`;
+    } else if (S.view === 'cat' && S.cat) {
+      const c = MENU.find(x => x.id === S.cat);
+      const main = c.groups.filter(g => g.kind !== 'addon');
+      const add = c.groups.filter(g => g.kind === 'addon');
+      const groups = main.map(g => `<div class="grp">${main.length > 1 || c.compact ? `<h4>${esc(g.name)}</h4>` : ''}<ul class="rows">${g.items.map(it => rowHtml(it)).join('')}</ul></div>`).join('');
+      body = `<div class="panel-head"><button type="button" class="back" data-back>← All categories</button></div>
+        <div class="panel-head"><h2>${esc(c.name)}</h2><p>${esc(c.blurb)}</p></div>
+        ${c.compact ? `<div class="compact-grid">${groups}</div>` : groups}
+        ${add.length ? `<div class="addon-box"><h4>${icon('spark')}Optional add-ons</h4><p>Add any extras to your visit. They're done during your service.</p>
+          <div class="addon-cols">${add.map(g => `<div><h5>${esc(g.name)}</h5><div class="chips">${g.items.map(chipHtml).join('')}</div></div>`).join('')}</div></div>` : ''}`;
+    } else {
+      body = `<div class="panel-head"><h2>Choose a service</h2><p>Pick a category. You can add services from more than one.</p></div>${search}
+        <div class="cat-grid">${MENU.map(c => {
+          const n = c.groups.reduce((t, g) => t + (g.kind === 'addon' ? 0 : g.items.length), 0);
+          const picked = S.items.filter(id => ALL_ITEMS[id].cat.id === c.id).length;
+          return `<button type="button" class="cat-tile" data-cat="${c.id}"><img src="${c.img}" alt="" loading="lazy"><div><h3>${esc(c.name)}</h3><small>${n} services${picked ? `<span class="picked">${picked} added</span>` : ''}</small></div></button>`;
+        }).join('')}</div>`;
+    }
+    const foot = `<div class="panel-foot"><button type="button" class="btn btn-primary" data-go="2" ${hasMain() ? '' : 'disabled'}>Continue to technician →</button></div>`;
+    return body + foot;
+  }
+
+  /* ---------- step 2: technician ---------- */
+  function stepTech() {
+    const card = (val, label, sub, cls, av) => `<button type="button" class="tech ${cls}" data-tech="${esc(val)}" aria-pressed="${S.tech === val}"><span class="av">${av}</span><b>${esc(label)}</b>${sub ? `<small>${sub}</small>` : ''}</button>`;
+    return `<div class="panel-head"><button type="button" class="back" data-go="1">← Services</button></div>
+      <div class="panel-head"><h2>Choose a technician</h2><p>Pick anyone you like, or let us match you with the first one available.</p></div>
+      <div class="tech-grid">
+        ${card('any', 'Any technician', 'First available', 'any', icon('star'))}
+        ${TECHS.map(t => card(t, t, '', '', esc(t[0]))).join('')}
+      </div>`;
+  }
+
+  /* ---------- step 3: time ---------- */
+  const today = () => { const d = new Date(); d.setHours(0, 0, 0, 0); return d; };
+  const maxDate = () => { const d = today(); d.setDate(d.getDate() + 60); return d; };
+  function slotsFor(dateStr) {
+    const d = parseYmd(dateStr);
+    const [open, close] = HOURS[d.getDay()];
+    const dur = totalMin();
+    let start = open;
+    if (dateStr === ymd(new Date())) {
+      const now = new Date(); const m = now.getHours() * 60 + now.getMinutes() + 30;
+      start = Math.max(open, Math.ceil(m / 15) * 15);
+    }
+    const out = [];
+    for (let t = start; t + dur <= close; t += 15) out.push(t);
+    return out;
+  }
+  function firstOpenDate() {
+    const d = today();
+    for (let i = 0; i < 60; i++) { if (slotsFor(ymd(d)).length) return ymd(d); d.setDate(d.getDate() + 1); }
+    return ymd(today());
+  }
+  function stepTime() {
+    if (!S.date) S.date = firstOpenDate();
+    if (!S.month) { const d = parseYmd(S.date); S.month = [d.getFullYear(), d.getMonth()]; }
+    const [y, m] = S.month;
+    const first = new Date(y, m, 1), days = new Date(y, m + 1, 0).getDate();
+    const t0 = today(), tMax = maxDate();
+    let cells = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map(x => `<span class="dow">${x}</span>`).join('');
+    for (let i = 0; i < first.getDay(); i++) cells += '<span></span>';
+    for (let i = 1; i <= days; i++) {
+      const d = new Date(y, m, i), s = ymd(d);
+      const off = d < t0 || d > tMax || !slotsFor(s).length;
+      cells += `<button type="button" data-date="${s}" ${off ? 'disabled' : ''} aria-pressed="${S.date === s}" class="${s === ymd(t0) ? 'today' : ''}" aria-label="${DAYS[d.getDay()]}, ${MONTHS[m]} ${i}">${i}</button>`;
+    }
+    const prevOk = new Date(y, m, 1) > t0, nextOk = new Date(y, m + 1, 1) <= tMax;
+    const slots = slotsFor(S.date);
+    const grp = (label, list) => list.length ? `<div class="slot-grp"><h5>${label}</h5><div class="slot-list">${list.map(t => `<button type="button" class="slot" data-time="${t}" aria-pressed="${S.time === t}">${fmtTime(t)}</button>`).join('')}</div></div>` : '';
+    return `<div class="panel-head"><button type="button" class="back" data-go="2">← Technician</button></div>
+      <div class="panel-head"><h2>Choose a time</h2><p>Your visit takes about ${fmtDur(totalMin())}.</p></div>
+      <div class="time-layout">
+        <div class="cal">
+          <div class="cal-head"><button type="button" data-month="-1" ${prevOk ? '' : 'disabled'} aria-label="Previous month">‹</button><b>${MONTHS[m]} ${y}</b><button type="button" data-month="1" ${nextOk ? '' : 'disabled'} aria-label="Next month">›</button></div>
+          <div class="cal-grid">${cells}</div>
+        </div>
+        <div class="slots">
+          <h4>Available start times</h4>
+          <p class="when">${fmtDate(S.date)}</p>
+          ${slots.length ? grp('Morning', slots.filter(t => t < 720)) + grp('Afternoon', slots.filter(t => t >= 720 && t < 1020)) + grp('Evening', slots.filter(t => t >= 1020)) : '<p class="empty-search">No times left on this day. Please pick another date.</p>'}
+          <p class="demo-flag">${icon('spark')}<span>Demo: times are based on opening hours only. The live site will show each technician's real availability.</span></p>
+        </div>
+      </div>`;
+  }
+
+  /* ---------- step 4: client ---------- */
+  function detailHtml() {
+    let t = S.time;
+    const lines = S.items.map(id => { const it = ALL_ITEMS[id]; const s = t; t += it.min; return `<li><span>${esc(it.name)}${it.note ? ' (' + esc(it.note) + ')' : ''}<small>${fmtTime(s)} – ${fmtTime(t)}</small></span><b>${money(it.price, it.up)}</b></li>`; }).join('');
+    return `<div class="detail"><h3>Your appointment</h3>
+      <dl><dt>Date</dt><dd>${fmtDate(S.date)}</dd><dt>Time</dt><dd>${fmtTime(S.time)} – ${fmtTime(S.time + totalMin())}</dd><dt>Technician</dt><dd>${S.tech === 'any' ? 'Any technician' : esc(S.tech)}</dd></dl>
+      <ul>${lines}</ul>
+      <div class="sum"><span>Estimated total</span><span>$${totalPrice()}${anyUp() ? '+' : ''}</span></div></div>`;
+  }
+  function stepClient() {
+    if (S.done) {
+      return `<div class="done-state"><div class="tick">✓</div><h2>You're all set</h2>
+        <p>This is a design demo, so no appointment was made and nothing was sent. On the live site, this step sends your request to the salon's booking system.</p>
+        <div class="panel-foot" style="justify-content:center;border:0"><button type="button" class="btn btn-primary" data-restart>Start a new booking</button><a class="btn btn-ghost" href="index.html">Back to home</a></div></div>`;
+    }
+    return `<div class="panel-head"><button type="button" class="back" data-go="3">← Time</button></div>
+      <div class="panel-head"><h2>Tell us about yourself</h2></div>
+      <div class="client-layout">
+        ${detailHtml()}
+        <form class="form" id="client-form" novalidate autocomplete="on">
+          <div class="field"><label for="c-phone">Phone number</label><input id="c-phone" name="tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="(954) 555-0100" required><span class="err">Please enter a 10-digit phone number.</span></div>
+          <div class="field"><label for="c-first">First name</label><input id="c-first" name="given-name" autocomplete="given-name" required><span class="err">Please enter your first name.</span></div>
+          <div class="field"><label for="c-last">Last name</label><input id="c-last" name="family-name" autocomplete="family-name" required><span class="err">Please enter your last name.</span></div>
+          <div class="field"><label for="c-note">Note <span>(optional)</span></label><textarea id="c-note" name="note" placeholder="Anything we should know?"></textarea></div>
+          <div class="panel-foot" style="margin-top:8px"><button type="button" class="btn btn-ghost" data-go="1">Add more services</button><button type="submit" class="btn btn-primary">Book now</button></div>
+        </form>
+      </div>`;
+  }
+
+  /* ---------- summary + chrome ---------- */
+  function renderSummary() {
+    const order = [...S.items].sort((a, b) => isAddon(a) - isAddon(b));
+    $('s-items').innerHTML = order.map(id => { const it = ALL_ITEMS[id]; return `<li class="${isAddon(id) ? 'addon' : ''}"><span>${esc(it.name)}${it.note ? ` <small>(${esc(it.note)})</small>` : ''}</span><span>${money(it.price, it.up)}</span><button type="button" data-toggle="${id}" aria-label="Remove ${esc(it.name)}">×</button></li>`; }).join('');
+    $('s-empty').hidden = S.items.length > 0;
+    $('s-count').textContent = S.items.length;
+    $('s-tech').textContent = S.tech ? (S.tech === 'any' ? 'Any technician' : S.tech) : 'Not chosen';
+    $('s-time').textContent = S.date && S.time != null ? fmtDate(S.date) + ', ' + fmtTime(S.time) : 'Not chosen';
+    const total = '$' + totalPrice() + (anyUp() ? '+' : '');
+    $('s-total').textContent = total; $('bar-total').textContent = total;
+    $('s-dur').textContent = 'About ' + fmtDur(totalMin());
+    $('s-fine').textContent = anyUp() ? 'Prices marked + are starting prices. Final price is confirmed at the salon.' : 'Final price is confirmed at the salon.';
+    if (!hasMain() && S.items.length) $('s-fine').textContent = 'Add-ons need a main service. Choose one to continue.';
+    $('bar-count').textContent = S.items.length ? S.items.length + (S.items.length === 1 ? ' item' : ' items') + ' · ' + fmtDur(totalMin()) : 'No services yet';
+    const next = { 1: ['Choose technician', 2], 2: ['Choose time', 3], 3: ['Your details', 4], 4: ['Book now', 'submit'] }[S.step];
+    const ok = S.step === 4 ? !S.done : canReach(next[1]);
+    [$('s-next'), $('bar-next')].forEach(b => { b.textContent = next[0]; b.disabled = !ok; b.dataset.next = next[1]; b.style.display = S.done ? 'none' : ''; });
+    $('s-items').classList.toggle('locked', S.done);
+  }
+  function renderStepper() {
+    document.querySelectorAll('#stepper li').forEach(li => {
+      const n = +li.dataset.step;
+      li.classList.toggle('on', n === S.step);
+      li.classList.toggle('done', n < S.step || (S.done && n === 4));
+      const b = li.querySelector('button');
+      b.disabled = !canReach(n) || S.done;
+      if (n === S.step) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
+    });
+  }
+  function render(scroll) {
+    if (!S.done && !canReach(S.step)) S.step = 1;
+    panel.innerHTML = [null, stepService, stepTech, stepTime, stepClient][S.step]();
+    renderStepper(); renderSummary();
+    if (scroll) $('stepper').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  function go(n) { if (canReach(n)) { S.step = n; toggleSheet(false); render(true); } }
+
+  /* ---------- events ---------- */
+  document.addEventListener('click', e => {
+    const t = e.target.closest('[data-toggle],[data-cat],[data-back],[data-go],[data-tech],[data-date],[data-time],[data-month],[data-restart],[data-close-sheet]');
+    if (!t) return;
+    if (t.dataset.toggle) return toggle(t.dataset.toggle);
+    if (t.dataset.cat) { S.view = 'cat'; S.cat = t.dataset.cat; return render(true); }
+    if ('back' in t.dataset) { S.view = 'cats'; S.cat = null; return render(true); }
+    if (t.dataset.go) { if (t.dataset.go === '1') S.q = ''; return go(+t.dataset.go); }
+    if (t.dataset.tech) { S.tech = t.dataset.tech; return go(3); }
+    if (t.dataset.date) { S.date = t.dataset.date; S.time = null; return render(); }
+    if (t.dataset.time) { S.time = +t.dataset.time; return go(4); }
+    if (t.dataset.month) { const [y, m] = S.month; const d = new Date(y, m + +t.dataset.month, 1); S.month = [d.getFullYear(), d.getMonth()]; return render(); }
+    if ('restart' in t.dataset) { Object.assign(S, { step: 1, view: 'cats', cat: null, q: '', items: [], tech: null, date: null, time: null, month: null, done: false }); save(); return render(true); }
+    if ('closeSheet' in t.dataset) return toggleSheet(false);
+  });
+  document.querySelectorAll('#stepper button').forEach(b => b.addEventListener('click', () => go(+b.closest('li').dataset.step)));
+  [$('s-next'), $('bar-next')].forEach(b => b.addEventListener('click', () => {
+    if (b.dataset.next === 'submit') { const f = $('client-form'); if (f) { toggleSheet(false); f.requestSubmit(); } }
+    else go(+b.dataset.next);
+  }));
+  panel.addEventListener('input', e => {
+    if (e.target.id === 'q') {
+      S.q = e.target.value; const pos = e.target.selectionStart;
+      render(); const q = $('q'); q.focus(); q.setSelectionRange(pos, pos);
+      return;
+    }
+    const f = e.target.closest('.field'); if (f) f.classList.remove('bad');
+  });
+  panel.addEventListener('submit', e => {
+    e.preventDefault();
+    const f = e.target;
+    const checks = [
+      ['c-phone', v => v.replace(/\D/g, '').replace(/^1(?=\d{10}$)/, '').length === 10],
+      ['c-first', v => v.trim().length > 0],
+      ['c-last', v => v.trim().length > 0]
+    ];
+    let firstBad = null;
+    checks.forEach(([id, ok]) => { const el = f.querySelector('#' + id); const bad = !ok(el.value); el.closest('.field').classList.toggle('bad', bad); if (bad && !firstBad) firstBad = el; });
+    if (firstBad) { firstBad.focus(); return; }
+    // Demo: nothing is sent or stored.
+    S.done = true; try { localStorage.removeItem(KEY); } catch (e) {} render(true);
+  });
+
+  // mobile summary sheet
+  function toggleSheet(on) { $('summary').classList.toggle('open', on); $('sheet-bd').classList.toggle('show', on); }
+  $('bar-open').addEventListener('click', () => toggleSheet(true));
+
+  // deep link from the home page: booking.html#cat-<id>
+  const hash = decodeURIComponent(location.hash.slice(1));
+  if (hash.startsWith('cat-') && MENU.some(c => c.id === hash.slice(4))) { S.view = 'cat'; S.cat = hash.slice(4); history.replaceState(null, '', location.pathname); }
+  render();
+})();
+</script>
+</body>
+</html>
